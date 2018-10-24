@@ -17,7 +17,8 @@ def haar_f(x, n, k):
 
 # Функция, для которой необходимо вычислить коэффициенты Фурье по системе Хаара
 def base(x):
-    return math.exp(-15 * abs(x - 0.3)) + x * x
+    #return math.exp(-15 * abs(x - 0.3)) + x * x
+    return 20 * (math.sin(4*x) ** 2) - math.sin(15*x)
 
 def get_coeff(f, a, b):
     return integrate.quad(lambda x: base(x) * f(x), a, b)[0]
