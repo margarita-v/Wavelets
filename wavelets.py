@@ -12,7 +12,7 @@
 
 import scipy.integrate as integrate
 from math import pi, sqrt, sin, cos, exp
-from numpy import inf
+from numpy import inf, conjugate
 
 
 # Функция, задающая сигнал
@@ -26,9 +26,13 @@ def psi(t):
     return exp(-abs(t) ** 2 / 2) - 0.5 * exp(-abs(t) ** 2 / 8)
 
 
+def psi_ab(a, b, t):
+    return abs(a) ** (-0.5) * psi((t - b) / a)
+
+
 # Функция, вычисляющая матрицу вейвлет-коэффициентов
 def solve(i, j):
-    return integral(lambda t: f(t) * psi((t - j) / i))
+    return integral(lambda t: f(t) * conjugate(psi_ab(i, j, t)))
 
 
 # Функция для нахождения определенного интеграла заданной функции по заданным пределам интегрирования
