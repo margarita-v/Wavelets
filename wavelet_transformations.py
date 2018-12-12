@@ -78,8 +78,14 @@ def pyramid_two_dimensional_transformation(matrix):
         return second_step
     indices = [[i for i in range(half_size)], [i + size for i in range(half_size)]]
     quadrant = pyramid_two_dimensional_transformation(np.take(second_step, indices))
-    print(quadrant)
-    return second_step
+    # добавляем к полученному квадранту остальные элементы матрицы
+    result = []
+    for i in range(half_size):
+        add_indices = [j + i * size for j in range(half_size, size)]
+        result.append(np.append(quadrant[i], np.take(second_step, add_indices)))
+    for i in range(half_size, size):
+        result.append(second_step[i])
+    return np.array(result)
 
 
 if __name__ == '__main__':
