@@ -10,20 +10,21 @@
     где psi(ab)(t) = |a|^(-1/2) * psi((t - b) / a)
 """
 
+from math import pi, cos, exp
+
 import scipy.integrate as integrate
-from math import pi, sqrt, sin, cos, exp
 from numpy import inf, conjugate
 
 
 # Функция, задающая сигнал
 def f(t):
-    return -28 * sin(4 * t / (19 * pi) - 1) + 6 * cos(t / (40 * sqrt(pi)))
+    return cos(pi * t / 4) * t ** 2
 
 
 # Функция, задающая материнский вейвлет
 def psi(t):
-    # DOG-вейвлет
-    return exp(-abs(t) ** 2 / 2) - 0.5 * exp(-abs(t) ** 2 / 8)
+    # MHAT-вейвлет
+    return (t ** 2 - 1) * exp(-t ** 2 / 2)
 
 
 def psi_ab(a, b, t):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from math import sqrt
 
 tab = '\t'
 
@@ -82,9 +83,30 @@ def pyramid_two_dimensional_transformation(matrix):
     return second_step
 
 
-if __name__ == '__main__':
-    solve([419, 411, 419, 399, 434, 384, 410, 404], 5)
-    solve([249, 247, 243, 241, 180, 184, 235, 237], 1, True)
+"""
+    УСЛОВИЕ ЗАДАЧИ:
+    К изображению a = [211, 215, 218, 220, 252, 216, 198, 142] применяется вейвлет-преобразование Хаара
+    с последующим удалением n наименьших по модулю коэффициентов. Обозначим через Bn декодированное
+    изображение, полученное с помощью обратного вейвлет-преобразования.
+    Определить максимальное значение n, при котором d2(a, Bn) < 3.5, и вычислить
+    соответствующее декодированное изображение.
+"""
 
-    matrix = np.array([[20, 12, 13, 11], [6, 2, 8, 12], [15, 17, 14, 8], [10, 6, 4, 10]])
-    print(pyramid_two_dimensional_transformation(matrix))
+
+# Функция, вычисляющая среднеквадратическое отклонение для двух изображений (Root Mean Square)
+def rms(a, b):
+    size, result = len(a), 0
+    for i in range(size):
+        result += abs(a[i] - b[i]) ** 2
+    return sqrt(result / size)
+
+
+if __name__ == '__main__':
+    image = [211, 215, 218, 220, 252, 216, 198, 142]
+    direct = direct_wavelet_transformation(image)
+    print(direct)
+    adjust = adjust_image(direct, 3, True)
+    print(adjust)
+    inverse = inverse_wavelet_transformation(adjust)
+    print(inverse)
+    print(rms(image, inverse))
